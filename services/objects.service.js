@@ -1,21 +1,12 @@
-const faker = require('faker');
+const { models } = require('../libs/sequelize');
 
 class ObjectService {
 
-  constructor () {
-    this.objects = [];
-    this.generate();
-  }
+  constructor () {}
 
-  async generate () {
-    for(let ind = 0; ind < 50; ind++) {
-      this.objects.push({
-        id: faker.datatype.uuid(),
-        orgId: faker.datatype.uuid(),
-        name: 'Object ' + ind,
-        image: faker.image.imageUrl(),
-      });
-    }
+  async create (data) {
+    const newObject = await models.Object.create(data);
+    return newObject;
   }
 
   async find () {
