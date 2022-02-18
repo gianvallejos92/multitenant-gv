@@ -1,5 +1,7 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
+const { ORGANIZATION_TABLE } = require('./organization.model');
+
 const OBJECT_TABLE = 'objects';
 
 const ObjectSchema = {
@@ -28,12 +30,23 @@ const ObjectSchema = {
     type: DataTypes.DATE,
     field: 'create_at',
     defaultValue: Sequelize.NOW
+  },
+  organizationId: {
+    field: 'organization_id',
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    references: {
+      model: ORGANIZATION_TABLE,
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
   }
 };
 
 class Object extends Model {
-  static associate() {
-    // associate (relaciones) To OrgId
+  static associate(models) {
+    this.belongsTo(models.Organization, {as: 'organization'});
   }
 
   static config (sequelize) {

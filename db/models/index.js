@@ -8,6 +8,9 @@ function setupModels(sequelize) {
   Organization.init(OrganizationSchema, Organization.config(sequelize));
   Field.init(FieldSchema, Field.config(sequelize));
   Record.init(RecordSchema, Record.config(sequelize));
+
+  Organization.associate(sequelize.models);
+  Object.associate(sequelize.models);
 }
 
 module.exports = setupModels;

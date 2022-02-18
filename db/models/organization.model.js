@@ -27,8 +27,11 @@ const OrganizationSchema = {
 };
 
 class Organization extends Model {
-  static associate () {
-    //associate (relations).
+  static associate (models) {
+    this.hasMany(models.Object, {
+      as: 'objects',
+      foreignKey: 'organizationId'
+    });
   }
 
   static config (sequelize) {

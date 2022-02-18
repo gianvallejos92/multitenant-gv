@@ -45,7 +45,6 @@ build/Release
 
 # Dependency directories
 node_modules/
-postgres_data/
 jspm_packages/
 
 # Snowpack dependency directory (https://snowpack.dev/)
@@ -168,5 +167,7 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+postgres_data
 
 # End of https://www.toptal.com/developers/gitignore/api/node,windows
