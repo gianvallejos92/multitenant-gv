@@ -6,8 +6,12 @@ const router = express.Router();
 const service = new FieldService();
 
 router.get('/', async (req, res) => {
-  const fields = await service.find();
-  res.json(fields);
+  try {
+    const fields = await service.find();
+    res.json(fields);
+  } catch (error) {
+    res.json({"message: " : error.message});
+  }
 });
 
 router.get('/:id',

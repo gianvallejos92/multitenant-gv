@@ -12,12 +12,16 @@ class ObjectService {
   }
 
   async find () {
-    const objects = await models.Object.findAll();
+    const objects = await models.Object.findAll({
+      include: ['organization', 'fields']
+    });
     return objects;
   }
 
   async findOne (id) {
-    const object = await models.Object.findByPk(id);
+    const object = await models.Object.findByPk(id, {
+      include: ['organization', 'fields']
+    });
     if (!object) {
       throw boom.notFound('Object not found');
     }
@@ -34,14 +38,6 @@ class ObjectService {
     const object = await this.findOne(id);
     const rpta = await object.destroy();
     return rpta;
-  }
-
-  async getObjectValues () {
-
-  }
-
-  async getFieldData () {
-
   }
 
 }

@@ -13,17 +13,11 @@ const ObjectSchema = {
   },
   name : {
     allowNull: false,
-    type: DataTypes.STRING,
-    unique: true,
+    type: DataTypes.STRING
   },
   label: {
     allowNull: false,
     type: DataTypes.STRING
-  },
-  orgId: {
-    allowNull: false,
-    type: DataTypes.STRING(18),
-    field: 'org_id'
   },
   createdAt: {
     allowNull: false,
@@ -47,6 +41,10 @@ const ObjectSchema = {
 class Object extends Model {
   static associate(models) {
     this.belongsTo(models.Organization, {as: 'organization'});
+    this.hasMany(models.Field, {
+      as: 'fields',
+      foreignKey: 'objectId'
+    });
   }
 
   static config (sequelize) {

@@ -12,12 +12,19 @@ class FieldService {
   }
 
   async find () {
-    const fields = await models.Field.findAll();
+    const fields = await models.Field.findAll({
+      include: ['object', 'records']
+    });
+    if (!fields) {
+      throw boom.notFound('Field not found');
+    }
     return fields;
   }
 
   async findOne (id) {
-    const field = await models.Field.findByPk(id);
+    const field = await models.Field.findByPk(id, {
+      include: ['object', 'records']
+    });
     if (!field) {
       throw boom.notFound('Field not found');
     }
@@ -34,10 +41,6 @@ class FieldService {
     const field = await this.findOne(id);
     const rpta = await field.destroy();
     return rpta;
-  }
-
-  async getOrganizationValues () {
-
   }
 
 }

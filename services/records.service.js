@@ -12,12 +12,16 @@ class RecordService {
   }
 
   async find () {
-    const records = await models.Record.findAll();
+    const records = await models.Record.findAll({
+      include: ['field']
+    });
     return records;
   }
 
   async findOne (id) {
-    const record = await models.Record.findByPk(id);
+    const record = await models.Record.findByPk(id, {
+      include: ['field']
+    });
     if (!record) {
       throw boom.notFound('Record not found');
     }

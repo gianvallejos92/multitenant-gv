@@ -2,6 +2,7 @@ const express = require('express');
 
 const OrganizationRouter = require('./organization.router');
 const ObjectRouter = require('./object.router');
+const MetadataRouter = require('./metadata.router');
 const FieldRouter = require('./field.router');
 const RecordRouter = require('./record.router');
 
@@ -10,6 +11,7 @@ function routerApi(app) {
   app.use('/api/v1', router);
   router.use('/organizations', OrganizationRouter);
   router.use('/objects', ObjectRouter);
+  router.use('/metadata', MetadataRouter);
   router.use('/fields', FieldRouter);
   router.use('/records', RecordRouter);
 }

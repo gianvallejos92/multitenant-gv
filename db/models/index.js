@@ -11,6 +11,8 @@ function setupModels(sequelize) {
 
   Organization.associate(sequelize.models);
   Object.associate(sequelize.models);
+  Field.associate(sequelize.models);
+  Record.associate(sequelize.models);
 }
 
 module.exports = setupModels;

@@ -12,12 +12,16 @@ class OrganizationService {
   }
 
   async find () {
-    const organizations = await models.Organization.findAll();
+    const organizations = await models.Organization.findAll({
+      include: ['objects']
+    });
     return organizations;
   }
 
   async findOne (id) {
-    const organization = await models.Organization.findByPk(id);
+    const organization = await models.Organization.findByPk(id, {
+      include: ['objects']
+    });
     if (!organization) {
       throw boom.notFound('Organization not found');
     }

@@ -1,6 +1,8 @@
 const {Model, DataTypes, Sequelize } = require('sequelize');
 
-const RECORD_TABLE = 'Records';
+const { FIELD_TABLE }  = require('./field.model');
+
+const RECORD_TABLE = 'records';
 
 const RecordSchema = {
   id: {
@@ -18,12 +20,23 @@ const RecordSchema = {
     type: DataTypes.DATE,
     field: 'create_at',
     defaultValue: Sequelize.NOW
+  },
+  fieldId: {
+    field: 'field_id',
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    references: {
+      model: FIELD_TABLE,
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
   }
 };
 
 class Record extends Model {
-  static associate () {
-    //associate (relations).
+  static associate (models) {
+    this.belongsTo(models.Field, { as: 'field' });
   }
 
   static config (sequelize) {

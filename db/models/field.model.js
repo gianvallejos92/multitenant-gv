@@ -1,5 +1,7 @@
 const {Model, DataTypes, Sequelize } = require('sequelize');
 
+const { OBJECT_TABLE }  = require('./object.model');
+
 const FIELD_TABLE = 'fields';
 
 const FieldSchema = {
@@ -11,15 +13,13 @@ const FieldSchema = {
   },
   name: {
     allowNull: false,
-    type: DataTypes.STRING,
-    unique: true,
+    type: DataTypes.STRING
   },
   type: {
     allowNull: false,
     type: DataTypes.STRING
   },
   size: {
-    allowNull: false,
     type: DataTypes.INTEGER
   },
   isRequired: {
@@ -32,12 +32,27 @@ const FieldSchema = {
     type: DataTypes.DATE,
     field: 'create_at',
     defaultValue: Sequelize.NOW
+  },
+  objectId: {
+    field: 'object_id',
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    references: {
+      model: OBJECT_TABLE,
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
   }
 };
 
 class Field extends Model {
-  static associate () {
-    //associate (relations).
+  static associate (models) {
+    this.belongsTo(models.Object, { as: 'object' });
+    this.hasMany(models.Record, {
+      as: 'records',
+      foreignKey: 'fieldId'
+    });
   }
 
   static config (sequelize) {
